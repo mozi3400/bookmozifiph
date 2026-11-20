@@ -33,7 +33,7 @@ Apply an edge rate limit to the public booking endpoints. The gateway preserves 
 
 - Pay on site; no online payment or automatic Sales Log entries.
 - Email-only Manage Booking finds capabilities already saved in that browser; it does not expose all customers' history from an email address alone. Clearing browser storage or switching devices loses that local index without the original booking capability.
-- The header's loyalty-points wording is present; loyalty accrual/redemption is not implemented.
+- Rewards wallets use nickname/email lookup with no PIN. Staff awards and redemption remain authenticated in Pay. Deploy the matching Pay loyalty migration/APIs first and enable participating businesses there. The public gateway allows only loyalty status, enrollment and lookup.
 - No automated email/SMS delivery. Optional mobile format validation does not verify ownership.
 - The separate ChatGPT Sites preview uses browser-local demonstration data; this repository uses the real shared backend when deployed.
 
