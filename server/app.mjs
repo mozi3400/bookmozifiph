@@ -9,7 +9,7 @@ const routes=new Map([
  ['/api/public/booking/loyalty/lookup','POST'],
  ...['availability','reserve','history','manage','manage/availability','manage/update'].map(p=>['/api/public/booking/'+p,'POST'])
 ]);
-const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8'};
+const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8'};
 export function createApp(env=process.env){
  const backend=new URL(env.PAY_BACKEND_URL||'https://pay.mozifi.ph');
  const publicOrigin=new URL(env.PUBLIC_URL||'https://book.mozifi.ph').origin;

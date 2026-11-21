@@ -9,6 +9,14 @@ test('serves production guest assets and never staff or finance files',async()=>
  try{
   const home=await fetch(base);assert.equal(home.status,200);const html=await home.text();assert.ok(html.includes('/booking/public.js'));assert.ok(!html.includes('data-preview="true"'));
   assert.equal((await fetch(base+'/booking/public.js')).status,200);
+  const qrModule=await fetch(base+'/booking/vendor/qrcode.mjs');
+  assert.equal(qrModule.status,200);
+  assert.match(qrModule.headers.get('content-type'),/^text\/javascript\b/);
+  assert.equal(qrModule.headers.get('x-content-type-options'),'nosniff');
+  const qrSource=await qrModule.text();
+  const {default:qrcode}=await import('data:text/javascript;base64,'+Buffer.from(qrSource).toString('base64'));
+  const qr=qrcode(0,'M');qr.addData('booking-module-smoke-test');qr.make();
+  assert.match(qr.createDataURL(),/^data:image\/gif;base64,/);
   assert.equal((await fetch(base+'/assets/LibreCaslonText-Variable.ttf')).status,200);
   for(const path of ['/booking/admin.html','/booking/admin.js','/booking/catalog.json','/.env','/server/app.mjs','/api/state','/api/login','/api/bookings/state','/api/loyalty/state','/api/loyalty/checkout'])assert.equal((await fetch(base+path)).status,404,path);
   assert.equal((await fetch(base+'/health')).status,200);
