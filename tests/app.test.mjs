@@ -52,3 +52,17 @@ test('backend errors are visible and unsafe production configuration fails close
  const upstream=createServer((_req,res)=>{res.writeHead(302,{Location:'https://example.com'});res.end();});const backend=await start(upstream);const app=createApp({PAY_BACKEND_URL:backend});const base=await start(app);
  try{const response=await fetch(base+'/api/public/booking/catalog');assert.equal(response.status,502);assert.match((await response.json()).error,/unavailable/);}finally{await stop(app);await stop(upstream);}
 });
+
+test('serves the package module and forwards only the guest included-visit route',async()=>{
+ const calls=[];
+ const upstream=createServer((req,res)=>{calls.push(req.url);res.writeHead(200,{'Content-Type':'application/json'});res.end('{"slots":[]}');});
+ const url=await start(upstream);const site=createApp({PAY_BACKEND_URL:url,PUBLIC_URL:'https://book.mozifi.ph'});const base=await start(site);
+ try{
+  assert.equal((await fetch(base+'/booking/packages.js')).status,200);
+  for(const p of ['/api/public/booking/hayfa/visit','/api/bookings/hayfa/visit','/api/bookings/hayfa/packages/example/payment']){
+    const res=await fetch(base+p,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+    assert.equal(res.status,p.includes('/public/')?200:404);
+  }
+  assert.deepEqual(calls,['/api/public/booking/hayfa/visit']);
+ }finally{await stop(site);await stop(upstream);}
+});
