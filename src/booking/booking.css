@@ -91,3 +91,23 @@
   .bk-mobile-action .bk-button { min-width: min(145px, 50%); max-width: 64%; white-space: normal }
   .bk-guide-edit-section { padding: 12px }
 }
+.bk-unlimited-category { display: grid; grid-template-columns: minmax(0,320px) max-content; align-items: end; gap: 10px; margin-bottom: 20px }
+.bk-unlimited-category .bk-field { margin-bottom: 0 }
+.bk-unlimited-category .bk-button { padding-inline: 12px; color: #a92121; border-color: #c62727 }
+.bk-unlimited-category .bk-button:hover { background: #fff3f3 }
+#unlimited-wash-title:focus { outline: none }
+.bk-unlimited-plans { display: grid; gap: 8px }
+.bk-unlimited-plan { justify-content: flex-start; text-align: left }
+.bk-unlimited-plan > span { display: grid; gap: 3px }
+.bk-unlimited-rate { font-variant-numeric: tabular-nums }
+.bk-unlimited-plan:not(:has(input:checked)) small { color: #555 }
+.bk-unlimited-consent { display: flex; gap: 10px; align-items: flex-start; padding: 4px 0; font-size: .875rem; line-height: 1.5 }
+.bk-unlimited-consent input { width: 20px; height: 20px; flex-shrink: 0; margin: 0; accent-color: #c62727 }
+@media (max-width: 650px) {
+  .bk-unlimited-category select { padding-inline: 12px 27px; background-position: right 8px center }
+  .bk-unlimited-category .bk-button { font-size: .875rem }
+}
+@media (max-width: 350px) {
+  .bk-unlimited-category { grid-template-columns: 1fr }
+  .bk-unlimited-category .bk-button { justify-self: start }
+}

@@ -4,6 +4,7 @@ import {resolve,sep,extname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 const routes=new Map([
  ['/api/public/booking/catalog','GET'],
+ ['/api/public/booking/halon/unlimited-wash','POST'],
  ['/api/public/booking/loyalty/status','GET'],
  ['/api/public/booking/loyalty/enroll','POST'],
  ['/api/public/booking/loyalty/lookup','POST'],

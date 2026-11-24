@@ -36,6 +36,14 @@ test('forwards public requests once, preserves origin and drops sensitive reques
   assert.equal((await post('/api/public/booking/reserve','"'+'x'.repeat(65536)+'"')).status,413);
   assert.equal((await post('/api/public/booking/unknown')).status,404);
   assert.equal(calls.length,2);
+  const unlimited = '/api/public/booking/halon/unlimited-wash';
+  const application = { name:'Manifest Test', planId:'4-wheel-1-month' };
+  assert.equal((await post(unlimited, JSON.stringify(application), { Origin:'https://book.mozifi.ph' })).status,409);
+  assert.equal(calls[2].url,unlimited);
+  assert.deepEqual(JSON.parse(calls[2].body),application);
+  assert.equal((await fetch(base+unlimited)).status,405);
+  assert.equal((await post('/api/public/booking/hayfa/unlimited-wash')).status,404);
+  assert.equal(calls.length,3);
  }finally{await stop(app);await stop(upstream);}
 });
 test('backend errors are visible and unsafe production configuration fails closed',async()=>{

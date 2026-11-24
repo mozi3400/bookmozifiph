@@ -4,6 +4,7 @@ import { mountGuestRewards } from './rewards.js';
 import { downloadConfirmation } from './confirmation.js';
 import { validateContactForm } from './contact.js';
 import { rememberedBookings, rememberBooking } from './history.js';
+import { openUnlimitedWashForm } from './unlimited-wash.js';
 import {esc,money,today,dayLabel,timeLabel,duration,logo,previewBanner,api,privateKey,preview,servicePrice,bookingAmount,hoursText,businessHours,phoneDisplay} from './shared.js';
 const root=document.querySelector('#booking-app');
 let guestRemarks='',catalog=null,business=null,step=0,ids=[],resourceId='any',date=today(),slots=[],selectedTime='',loading=false,error='',guest={nickname:'',email:'',mobile:'',birthday:''},saved=null,manageKey='',requestKey=crypto.randomUUID(),key=privateKey(),availabilityVersion=null,availabilityTotal=null,availabilitySequence=0,serviceCategory='';
@@ -55,9 +56,12 @@ function servicesView() {
   const mode = guided ? 'guide' : activeCategory ? 'category:' + activeCategory : 'all';
   const options = [...(definition ? [['guide', 'Help me suggest']] : []), ['all', 'All services'],
     ...categories.map(category => ['category:' + category, category])];
-  const menu = `<label class="bk-field bk-service-category">Category<select id="service-category">
+  const categoryMenu = `<label class="bk-field bk-service-category">Category<select id="service-category">
     ${options.map(([value, label]) => `<option value="${esc(value)}" ${value === mode ? 'selected' : ''}>${esc(label)}</option>`).join('')}
   </select></label>`;
+  const menu = business.id === 'halon' && business.unlimitedWashPlans?.length
+    ? `<div class="bk-unlimited-category">${categoryMenu}<button type="button" class="bk-button" data-unlimited-wash-button aria-haspopup="dialog">Unlimited Car Wash</button></div>`
+    : categoryMenu;
   let html, visibleItems;
   const view = { action: 'continue', label: 'Continue', disabled: !ids.length };
   const cards = (entries, extra = false) => entries.map(service => serviceCard(service, ids.includes(service.id), extra)).join('');
@@ -200,6 +204,7 @@ function bind(){
  root.querySelectorAll('[data-business]').forEach(b=>b.onclick=()=>{business=catalog.businesses.find(x=>x.id===b.dataset.business);resetServiceSelection();step=0;error='';render();});
  root.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>{remember();step=Number(b.dataset.step);error='';render();if(step===1)loadTimes();});
  bindServiceGuide();
+ root.querySelector('[data-unlimited-wash-button]')?.addEventListener('click', () => openUnlimitedWashForm(openDialog, business.unlimitedWashPlans));
  root.querySelectorAll('[data-time]').forEach(b=>b.onclick=()=>{selectedTime=b.dataset.time;render();});
  const category=root.querySelector('#service-category');if(category)category.onchange=()=>{serviceCategory=category.value;error='';render();root.querySelector('#service-category')?.focus({preventScroll:true});};const d=root.querySelector('#booking-date'),r=root.querySelector('#resource');if(d)d.onchange=()=>{if(!d.value)return;date=d.value;selectedTime='';loadTimes();};root.querySelectorAll('[name=resource-choice]').forEach(input=>input.onchange=()=>{resourceId=input.value;selectedTime='';loadTimes(true);});
  root.querySelectorAll('[data-action]').forEach(b=>b.onclick=async()=>{const a=b.dataset.action;if(a==='hours')return hoursDialog(catalog.businesses.find(x=>x.id===b.dataset.hoursBusiness));if(a==='reload')return init();if(a==='manage')return manageDialog();if(a==='retry-times')return loadTimes();if(a==='download-confirmation'){b.disabled=true;const label=b.textContent;b.textContent='Preparing JPEG…';try{await downloadConfirmation(saved,business,catalog.resources.find(r=>r.id===saved.resourceId));}catch(e){const message=document.createElement('p');message.className='bk-error';message.setAttribute('role','alert');message.textContent=e.message;b.closest('.bk-success').append(message);}finally{b.disabled=false;b.textContent=label;}return;}if(a==='copy-link'){try{await navigator.clipboard.writeText(manageLink());b.textContent='Copied';}catch{b.textContent='Select and copy the link below';}return;}if(a==='new'){guestRemarks='';saved=null;business=null;step=0;resetServiceSelection();requestKey=crypto.randomUUID();key=privateKey();history.replaceState(null,'',location.pathname);render();return;}if(a==='back'){remember();if(step)step--;else business=null;error='';render();return;}if(a==='continue')return advance();});
