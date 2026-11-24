@@ -61,6 +61,15 @@
 .bk-guide-retained-row + .bk-guide-retained-row { border-top: 1px solid #eee }
 .bk-guide-retained-row span { overflow-wrap: anywhere }
 .bk-guide-retained-row button { min-height: 44px; flex-shrink: 0 }
+.bk-plan-phases { display: grid; gap: 8px; margin: 8px 0 20px }
+.bk-plan-phase { border: 1px solid #dedede; border-radius: 6px; padding: 0 12px; min-width: 0 }
+.bk-plan-phase summary { cursor: pointer; min-height: 44px; padding: 12px 0; font-size: .9375rem; line-height: 1.35 }
+.bk-plan-phase summary strong { margin-right: 6px; color: #a91d16 }
+.bk-plan-phase[open] { border-color: #d93025 }
+.bk-plan-phase p { margin: 0 0 12px }
+.bk-plan-services { list-style: none; padding: 0; margin: 0 0 8px }
+.bk-plan-services li { display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid #eee; padding: 9px 0; font-size: .875rem }
+.bk-plan-services li span:last-child { text-align: right; flex-shrink: 0 }
 .bk-guide-admin-entry { margin-top: 8px }
 .bk-guide-dialog { max-width: 680px }
 .bk-guide-edit-section { margin: 16px 0; border: 1px solid #ddd; border-radius: 6px; padding: 16px; min-width: 0 }

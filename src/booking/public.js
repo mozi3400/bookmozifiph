@@ -1,5 +1,5 @@
 import { enabledGuide, followGuide, recommendations } from './guide-rules.js';
-import { changeAnswers, contactGuideView, questionView, serviceCard } from './guide-view.js';
+import { changeAnswers, contactGuideView, packagePlanView, questionView, serviceCard } from './guide-view.js';
 import { mountGuestRewards } from './rewards.js';
 import { downloadConfirmation } from './confirmation.js';
 import { validateContactForm } from './contact.js';
@@ -75,9 +75,12 @@ function servicesView() {
       const { mainServices, addOns } = recommendations(definition, path, items, resources, ids);
       visibleItems = [...mainServices, ...addOns];
       const matches = mainServices.length > 0;
-      html = `<h3 class="bk-guide-heading" id="guide-heading" tabindex="-1">${matches ? 'Recommended services' : 'No matching services'}</h3>
+      const serviceOptions = cards(mainServices) + (addOns.length ? `<h3 class="bk-category">Optional add-ons</h3>${cards(addOns, true)}` : '');
+      html = path.type === 'plan' ? packagePlanView(path.plan, items,
+        matches ? serviceOptions : '<p class="bk-muted">There are no available first-visit options right now.</p>') :
+        `<h3 class="bk-guide-heading" id="guide-heading" tabindex="-1">${matches ? 'Recommended services' : 'No matching services'}</h3>
         ${matches ? '' : '<p class="bk-muted">Try different answers or browse the full catalog.</p>'}${changeAnswers}
-        ${cards(mainServices)}${addOns.length ? `<h3 class="bk-category">Optional add-ons</h3>${cards(addOns, true)}` : ''}`;
+        ${serviceOptions}`;
       if (!matches) Object.assign(view, { action: 'browse-all', label: 'Browse all services', disabled: false });
     }
   } else {
