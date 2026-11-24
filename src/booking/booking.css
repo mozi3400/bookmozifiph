@@ -31,3 +31,54 @@
 
 .bk-guest-remarks{margin-top:24px}.bk-guest-remarks textarea{min-height:96px;max-width:100%;resize:vertical}.bk-guest-remarks small{display:block;font-size:.8125rem;line-height:1.5;margin-top:8px}
 .rw-card{border:1px solid #ddd;border-radius:8px;padding:24px;margin:24px 0;background:#fff}.rw-eyebrow{font-size:.8125rem;letter-spacing:.12em;color:#666}.rw-balance{font-size:2.5rem;font-weight:600;letter-spacing:-.04em;margin:12px 0}.rw-balance small{font-size:1rem;letter-spacing:0;font-weight:400}.rw-qr{display:block;width:220px;max-width:100%;height:auto;margin:20px auto;image-rendering:pixelated}.rw-history{display:flex;justify-content:space-between;gap:16px;border-top:1px solid #eee;padding:14px 0;overflow-wrap:anywhere}.rw-history small{display:block;color:#777;margin-top:6px;font-size:.8125rem}.rw-video{width:100%;max-height:320px;background:#fff;margin-bottom:16px}.rw-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px}.rw-box{border:1px solid #ddd;padding:20px;border-radius:6px;min-width:0}.rw-check{display:flex;gap:10px;align-items:center;margin:12px 0;font-size:.875rem}.rw-check input{width:20px;height:20px;accent-color:#d93025}.rw-summary{line-height:1.7;white-space:normal}.rw-business-list{display:grid;gap:10px}.rw-campaign-list button{margin:6px 6px 6px 0}.rw-service-options{max-height:180px;overflow:auto}.rw-staff-history{max-height:400px;overflow:auto}@media(max-width:650px){.rw-layout{grid-template-columns:1fr}.rw-card{padding:18px}.rw-balance{font-size:2rem}.rw-box{padding:16px}}
+
+/* Keep the mobile action bar viewport-fixed, outside the animated layout. */
+@media(max-width:650px){.bk-flow{padding-bottom:calc(130px + env(safe-area-inset-bottom,0px))}.bk-mobile-action{box-sizing:border-box;z-index:20}.bk-mobile-action .bk-mobile-only{min-width:0}.bk-mobile-action strong{display:block;font-size:1rem;line-height:1.35}.bk-mobile-action .bk-button{flex-shrink:0}}
+
+@media(max-width:650px){.bk-header{position:sticky;top:0;z-index:30;background:#fff}.bk-flow{scroll-margin-top:80px}.bk-service,.bk-field,.bk-category{scroll-margin-top:96px}}
+
+.bk-guide-question { margin: 0; padding: 0; border: 0; min-width: 0 }
+.bk-guide-heading, .bk-guide-question legend { font-size: 1.15rem; font-weight: 600; line-height: 1.35; margin: 0 0 14px; padding: 0 }
+.bk-guide-answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px }
+.bk-guide-answer {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  position: relative; border: 1px solid #ddd; border-radius: 6px; background: #fff;
+  min-height: 54px; padding: 12px 14px; cursor: pointer; line-height: 1.35;
+  transition: border-color .18s ease, background .18s ease; overflow-wrap: anywhere;
+}
+.bk-guide-answer:has(input:checked) { border-color: #d93025; box-shadow: inset 0 0 0 1px #d93025; color: #a91d16; background: #fff7f6 }
+.bk-guide-check { visibility: hidden; flex: 0 0 19px; text-align: center; font-weight: 700 }
+.bk-guide-answer:has(input:checked) .bk-guide-check { visibility: visible }
+.bk-guide-answer:has(input:focus-visible) { outline: 2px solid #d93025; outline-offset: 3px }
+@media (hover: hover) {
+  .bk-guide-answer:hover { border-color: #d93025; background: #fff7f6 }
+}
+.bk-guide-back { display: block; min-height: 44px; margin: 4px 0 12px }
+.bk-guide-contact { display: inline-flex; align-items: center; text-decoration: none }
+.bk-guide-retained { margin: 0 0 24px; padding: 12px 16px 4px; border: 1px solid #ddd; border-radius: 6px }
+.bk-guide-retained h3 { margin: 2px 0 8px; font-size: .9375rem }
+.bk-guide-retained-row { min-height: 44px; display: flex; align-items: center; gap: 12px; justify-content: space-between; font-size: .875rem }
+.bk-guide-retained-row + .bk-guide-retained-row { border-top: 1px solid #eee }
+.bk-guide-retained-row span { overflow-wrap: anywhere }
+.bk-guide-retained-row button { min-height: 44px; flex-shrink: 0 }
+.bk-guide-admin-entry { margin-top: 8px }
+.bk-guide-dialog { max-width: 680px }
+.bk-guide-edit-section { margin: 16px 0; border: 1px solid #ddd; border-radius: 6px; padding: 16px; min-width: 0 }
+.bk-guide-edit-section summary { cursor: pointer; min-height: 28px }
+.bk-guide-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: .9375rem }
+.bk-guide-toggle input, .bk-guide-picker input[type=checkbox] { width: 19px; height: 19px; flex-shrink: 0; accent-color: #c62727 }
+.bk-guide-editor-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 8px 0 16px }
+.bk-guide-editor-actions .bk-button { min-height: 44px; padding-inline: 12px }
+.bk-guide-picker { border: 1px solid #e5e5e5; padding: 10px; margin: 0 0 12px; border-radius: 6px; min-width: 0 }
+.bk-guide-picker legend { padding: 0 4px; font-size: .875rem }
+.bk-guide-picker-count { margin: 0 0 4px; font-size: .875rem }
+.bk-guide-picker-items { max-height: 200px; overflow: auto; overscroll-behavior: contain }
+.bk-guide-picker-items label { display: flex; align-items: flex-start; gap: 8px; min-height: 44px; padding: 6px 0; font-size: .875rem; overflow-wrap: anywhere }
+.bk-guide-picker-items label + label { border-top: 1px solid #eee }
+.bk-guide-picker-items small { display: block; color: #666; margin-top: 2px }
+@media (max-width: 650px) {
+  #guide-heading { scroll-margin-top: 108px }
+  .bk-guide-answer { font-size: .875rem; padding: 10px }
+  .bk-mobile-action .bk-button { min-width: min(145px, 50%); max-width: 64%; white-space: normal }
+  .bk-guide-edit-section { padding: 12px }
+}
